@@ -3,9 +3,9 @@ import Main from './components/MainComponent';
 
 class App extends React.Component {
   render() {
-  return (
-    <Main/>
-  );
+    return (
+      <Main/>
+    );
   }
 };
 

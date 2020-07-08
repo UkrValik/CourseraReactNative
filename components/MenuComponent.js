@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import DISHES from '../shared/dishes';
+import { DISHES } from '../shared/dishes';
 
 class Menu extends React.Component {
     
@@ -27,8 +27,8 @@ class Menu extends React.Component {
                         title={item.name}
                         subtitle={item.description}
                         hideChevron={true}
-                        onPress={() => navigate('Dishdetail', { dishId: item.id })}
-                        leftAvatar={{ source: require('./images/uthappizza.png')}}
+                        onPress={ () => navigate('Dishdetail', { dishId: item.id }) }
+                        leftAvatar={{ source: require('./images/uthappizza.png') }}
                       />
             );
         };
