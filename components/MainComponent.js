@@ -7,6 +7,24 @@ import AboutNavigator from './AboutNavigator';
 import { createDrawerNavigator, DrawerItem, DrawerItemList, DrawerContentScrollView } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
+import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+
+const mapStateToProps = state => {
+    return {
+        dishes: state.dishes,
+        promotions: state.promotions,
+        leaders: state.leaders,
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    fetchDishes: () => dispatch(fetchDishes()),
+    fetchComments: () => dispatch(fetchComments()),
+    fetchPromos: () => dispatch(fetchPromos()),
+    fetchLeaders: () => dispatch(fetchLeaders()),
+});
 
 const MainNavigator = createDrawerNavigator();
 
@@ -33,6 +51,13 @@ const CustomDrawerContentComponent = (props) => (
 );
 
 class Main extends Component {
+
+    componentDidMount() {
+        this.props.fetchComments();
+        this.props.fetchDishes();
+        this.props.fetchLeaders();
+        this.props.fetchPromos();
+    }
 
     render() {
         return (
@@ -120,4 +145,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
