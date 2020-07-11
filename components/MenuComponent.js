@@ -22,14 +22,14 @@ class Menu extends React.Component {
 
         const renderMenuItem = ({item, index}) => {
             return (
-                    <ListItem
-                        key={index}
-                        title={item.name}
-                        subtitle={item.description}
-                        hideChevron={true}
-                        onPress={ () => navigate('Dishdetail', { dishId: item.id }) }
-                        leftAvatar={{ source: require('./images/uthappizza.png') }}
-                      />
+                <ListItem
+                    key={index}
+                    title={item.name}
+                    subtitle={item.description}
+                    hideChevron={true}
+                    onPress={ () => navigate('Dishdetail', { dishId: item.id }) }
+                    leftAvatar={{ source: require('./images/uthappizza.png') }}
+                  />
             );
         };
 
