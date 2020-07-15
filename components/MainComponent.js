@@ -8,7 +8,7 @@ import { createDrawerNavigator, DrawerItem, DrawerItemList, DrawerContentScrollV
 import { NavigationContainer } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { baseUrl } from '../shared/baseUrl';
+import ReservationNavigator from './ReservationNavigator';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
@@ -109,6 +109,18 @@ class Main extends Component {
                                 size={22}
                                 color={tintColor}
                             />
+                        )
+                    }}/>
+                    <MainNavigator.Screen name='Reserve table' component={ReservationNavigator} options={{
+                        title: 'Reserve table',
+                        drawerLabel: 'Reserve table',
+                        drawerIcon: ({ tintColor }) => (
+                            <Icon 
+                                name='cutlery'
+                                type='font-awesome'
+                                size={24}
+                                color={tintColor}
+                                />
                         )
                     }}/>
                 </MainNavigator.Navigator>
