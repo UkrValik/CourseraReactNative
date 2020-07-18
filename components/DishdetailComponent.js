@@ -4,6 +4,7 @@ import { Card, Icon, Rating, Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { postFavorite, postComment } from '../redux/ActionCreators';
+import * as Animatable from 'react-native-animatable';
 
 const mapStateToProps = state => {
     return {
@@ -24,74 +25,76 @@ class RenderDish extends React.Component {
         const dish = this.props.dish;
         if (dish != null) {
             return (
-                <Card
-                    featuredTitle={dish.name}
-                    image={{ uri: baseUrl + dish.image }}
-                >
-                    <Text style={{margin: 10}}>
-                        {dish.description}
-                    </Text>
-                    <View style={styles.icons}>
-                        <Icon 
-                            raised
-                            reverse
-                            name={ this.props.favorite ? 'heart' : 'heart-o' }
-                            type='font-awesome'
-                            color='#f50'
-                            onPress={() => this.props.favorite ? console.log('Already Favorite') : this.props.onPress()}
-                            />
-                        <Icon
-                            raised
-                            reverse
-                            name='pencil'
-                            type='font-awesome'
-                            color='#512DA8'
-                            onPress={() => this.props.setModalVisible(true)}
-                            />
-                    </View>
-                    <Modal
-                        visible={this.props.parentState.modalVisible}
-                        animationType='slide'
-                        transparent={false}
-                        >
-                        <View style={styles.modal}>
-                            <Rating 
-                                ratingCount={5}
-                                minValue={1}
-                                imageSize={50}
-                                startingValue={5}
-                                showRating={true}
-                                onFinishRating={(rating) => this.props.setRating(rating)}
+                <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
+                    <Card
+                        featuredTitle={dish.name}
+                        image={{ uri: baseUrl + dish.image }}
+                    >
+                        <Text style={{margin: 10}}>
+                            {dish.description}
+                        </Text>
+                        <View style={styles.icons}>
+                            <Icon 
+                                raised
+                                reverse
+                                name={ this.props.favorite ? 'heart' : 'heart-o' }
+                                type='font-awesome'
+                                color='#f50'
+                                onPress={() => this.props.favorite ? console.log('Already Favorite') : this.props.onPress()}
                                 />
-                            <Input
-                                leftIcon={() => (<Icon name='user-o' type='font-awesome'/>)}
-                                placeholder='Author'
-                                onChangeText={(text) => this.props.setAuthor(text)}
+                            <Icon
+                                raised
+                                reverse
+                                name='pencil'
+                                type='font-awesome'
+                                color='#512DA8'
+                                onPress={() => this.props.setModalVisible(true)}
                                 />
-                            <Input
-                                placeholder='Comment'
-                                leftIcon={() => (<Icon name='comment-o' type='font-awesome'/>)}
-                                onChangeText={(text) => this.props.setComment(text)}
-                                />
-                            <View style={styles.button}>
-                                <Button
-                                    key={1}
-                                    title='Submit'
-                                    color='#512DA8'
-                                    onPress={() => this.props.handleComment()}
-                                    />
-                            </View>
-                            <View style={styles.button}>
-                                <Button    
-                                    key={2}
-                                    title='Cancel'
-                                    color='grey'
-                                    onPress={() => {this.props.setModalVisible(false); this.props.resetState();}}
-                                    />
-                            </View>
                         </View>
-                    </Modal>
-                </Card>        
+                        <Modal
+                            visible={this.props.parentState.modalVisible}
+                            animationType='slide'
+                            transparent={false}
+                            >
+                            <View style={styles.modal}>
+                                <Rating 
+                                    ratingCount={5}
+                                    minValue={1}
+                                    imageSize={50}
+                                    startingValue={5}
+                                    showRating={true}
+                                    onFinishRating={(rating) => this.props.setRating(rating)}
+                                    />
+                                <Input
+                                    leftIcon={() => (<Icon name='user-o' type='font-awesome'/>)}
+                                    placeholder='Author'
+                                    onChangeText={(text) => this.props.setAuthor(text)}
+                                    />
+                                <Input
+                                    placeholder='Comment'
+                                    leftIcon={() => (<Icon name='comment-o' type='font-awesome'/>)}
+                                    onChangeText={(text) => this.props.setComment(text)}
+                                    />
+                                <View style={styles.button}>
+                                    <Button
+                                        key={1}
+                                        title='Submit'
+                                        color='#512DA8'
+                                        onPress={() => this.props.handleComment()}
+                                        />
+                                </View>
+                                <View style={styles.button}>
+                                    <Button    
+                                        key={2}
+                                        title='Cancel'
+                                        color='grey'
+                                        onPress={() => {this.props.setModalVisible(false); this.props.resetState();}}
+                                        />
+                                </View>
+                            </View>
+                        </Modal>
+                    </Card>
+                </Animatable.View>
             )
         } else {
             return (
@@ -127,13 +130,15 @@ function RenderComments(props) {
     }
 
     return(
-        <Card title='comments'>
-            <FlatList
-                data={comments}
-                renderItem={renderCommentItem}
-                keyExtractor={item => item.id.toString()}
-                />
-        </Card>
+        <Animatable.View animation='fadeInUp' duration={2000} delay={1000}>
+            <Card title='comments'>
+                <FlatList
+                    data={comments}
+                    renderItem={renderCommentItem}
+                    keyExtractor={item => item.id.toString()}
+                    />
+            </Card>
+        </Animatable.View>
     );
 }
 
