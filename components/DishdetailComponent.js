@@ -38,7 +38,7 @@ class RenderDish extends React.Component {
                             name={ this.props.favorite ? 'heart' : 'heart-o' }
                             type='font-awesome'
                             color='#f50'
-                            onPress={() => props.favorite ? console.log('Already Favorite') : props.onPress()}
+                            onPress={() => this.props.favorite ? console.log('Already Favorite') : this.props.onPress()}
                             />
                         <Icon
                             raised

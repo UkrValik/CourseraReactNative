@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import ReservationNavigator from './ReservationNavigator';
+import FavoriteNavigator from './FavoriteNavigator';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
@@ -109,6 +110,18 @@ class Main extends Component {
                                 size={22}
                                 color={tintColor}
                             />
+                        )
+                    }}/>
+                    <MainNavigator.Screen name='My Favorites' component={FavoriteNavigator} options={{
+                        title: 'My Favorites',
+                        drawerLabel: 'My Favorites',
+                        drawerIcon: ({ tintColor }) => (
+                            <Icon 
+                                name='heart'
+                                type='font-awesome'
+                                size={24}
+                                color={tintColor}
+                                />
                         )
                     }}/>
                     <MainNavigator.Screen name='Reserve table' component={ReservationNavigator} options={{
