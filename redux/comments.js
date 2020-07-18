@@ -1,4 +1,5 @@
 import * as ActionTypes from './ActionTypes';
+import { act } from 'react-test-renderer';
 
 export const comments = (state = {
     errMess: null,
@@ -10,7 +11,10 @@ export const comments = (state = {
             return {...state, errMess: null, comments: action.payload};
         
         case ActionTypes.COMMENTS_FAILED:
-            return {...state, errMess: action.payload, comments: []}
+            return {...state, errMess: action.payload, comments: []};
+
+        case ActionTypes.ADD_COMMENT:
+            return {...state, errMess: null, comments: state.comments.concat(action.payload)};
 
         default:
             return state;

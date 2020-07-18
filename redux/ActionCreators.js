@@ -1,6 +1,5 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
-import { comments } from './comments';
 
 export const fetchComments = () => (dispatch) => {
     return fetch(baseUrl + 'comments')
@@ -30,6 +29,25 @@ export const commentsFailed = (errMess) => ({
 export const addComments = (comments) => ({
     type: ActionTypes.ADD_COMMENTS,
     payload: comments,
+});
+
+export const postComment = (id, dishId, rating, author, comment) => (dispatch) => {
+    const date = new Date();
+    setTimeout(() => {
+        dispatch(addComment({
+            id: id,
+            comment: comment,
+            rating: rating,
+            dishId: dishId,
+            author: author,
+            date: date.toISOString(),
+        }), 2000);
+    });
+}
+
+export const addComment = (comment) => ({
+    type: ActionTypes.ADD_COMMENT,
+    payload: comment,
 });
 
 export const fetchDishes = () => (dispatch) => {
