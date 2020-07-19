@@ -26,10 +26,11 @@ function RenderDish(props) {
     const viewRef = useRef(null);
 
     const recognizeDrag = ({ moveX, moveY, dx, dy }) => {
-        if (dx < -200)
-            return true;
-        else
-            return false;
+        return dx < -200;
+    }
+
+    const recognizeComment = ({ moveX, moveY, dx, dy }) => {
+        return dx > 200;
     }
     
     const panResponder = PanResponder.create({
@@ -58,6 +59,22 @@ function RenderDish(props) {
                     ],
                     { cancelable: false }
                 ); 
+            else if (recognizeComment(gestureState))
+                Alert.alert(
+                    'Whould you like to leave a comment?',
+                    '',
+                    [
+                        {
+                            text: 'No',
+                            style: 'cancel',
+                        },
+                        {
+                            text: 'Yes',
+                            onPress: () => props.setModalVisible(true),
+                        }
+                    ],
+                    { cancelable: false }
+                );
             return true;
         }
     });
