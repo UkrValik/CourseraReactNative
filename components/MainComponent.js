@@ -10,6 +10,7 @@ import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import ReservationNavigator from './ReservationNavigator';
 import FavoriteNavigator from './FavoriteNavigator';
+import LoginNavigator from './LoginNavigator';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
@@ -63,7 +64,19 @@ class Main extends Component {
     render() {
         return (
             <NavigationContainer>
-                <MainNavigator.Navigator drawerStyle={{backgroundColor: '#D1C4E9'}} drawerContent={(props) => <CustomDrawerContentComponent {...props} />}>
+                <MainNavigator.Navigator initialRouteName='Home' drawerStyle={{backgroundColor: '#D1C4E9'}} drawerContent={(props) => <CustomDrawerContentComponent {...props} />}>
+                    <MainNavigator.Screen name='Login' component={LoginNavigator} options={{
+                        title: 'Login',
+                        drawerLabel: 'Login',
+                        drawerIcon: ({ tintColor }) => (
+                            <Icon 
+                                name='sign-in'
+                                type='font-awesome'
+                                size={24}
+                                color={tintColor}
+                            />
+                        )
+                    }} />                    
                     <MainNavigator.Screen name='Home' component={HomeNavigator} options={{
                         title: 'Home',
                         drawerLabel: 'Home',
