@@ -3,6 +3,9 @@ import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Alert } fro
 // import DatePicker from 'react-native-datepicker';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import * as Animatable from 'react-native-animatable';
+import * as Permissions from 'expo-permissions';
+import * as Notifications  from 'expo-notifications';
+// import { Permissions, Notifications } from 'react-native-unimodules';
 
 class Reservation extends React.Component {
 
@@ -33,6 +36,36 @@ class Reservation extends React.Component {
         });
     }
 
+    async obtainNotificationPermission() {
+        console.log(Permissions);
+        let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+        if (permission.state !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+            if (permission.status !== 'granted') {
+                Alert.alert(
+                    'Permission not granted to show notifications!'
+                );
+            }
+        }
+        return permission;
+    }
+
+    async presentLocalNotification(date) {
+        // await this.obtainNotificationPermission();
+        Notifications.presentNotificationAsync({
+            title: 'Your reservation',
+            body: 'Reservation for ' + date + ' requested',
+            ios: {
+                sound: true,
+            },
+            android: {
+                sound: true,
+                vibrate: true,
+                color: '#512DA8',
+            },
+        });
+    }
+
     handleReservation = () => {
         console.log(JSON.stringify(this.state));
         Alert.alert(
@@ -46,7 +79,10 @@ class Reservation extends React.Component {
                 },
                 {
                     text: 'OK',
-                    onPress: () => this.resetForm(),
+                    onPress: () => {
+                        this.presentLocalNotification(this.state.date);
+                        this.resetForm();
+                    },
                 },
             ],
             { cancelable: false }
