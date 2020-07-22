@@ -4,6 +4,8 @@ import { Icon, Input, CheckBox, Button } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
+import * as Asset from 'expo-asset';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -113,6 +115,19 @@ class RegisterTab extends React.Component {
         }
     }
 
+    proccessImage = async (imageUri) => {
+        let proccessedImage = await ImageManipulator.manipulateAsync(
+            imageUri,
+            [
+                {
+                    resize: { width: 400 }
+                }
+            ],
+            { format: 'png' }
+        );
+        this.setState({ imageUrl: proccessedImage.uri });
+    }
+
     static navigationOptions = {
         title: 'Register',
         tabBarIcon: ({tintColor}) => (
@@ -126,12 +141,12 @@ class RegisterTab extends React.Component {
         
         if (cameraPermission.status === 'granted' && cameraRollPermission.status === 'granted') {
             let captureImage = await ImagePicker.launchCameraAsync({
-                allowsEditing: true,
+                allowsEditing: false,
                 aspect: [4, 3],
             });
             console.log(captureImage);
             if (!captureImage.cancelled) {
-                this.setState({ imageUrl: captureImage.uri })
+                this.proccessImage(captureImage.uri);
             }
         }
     }
