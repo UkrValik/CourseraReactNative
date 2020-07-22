@@ -39,7 +39,7 @@ class Reservation extends React.Component {
     async obtainNotificationPermission() {
         console.log(Permissions);
         let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
-        if (permission.state !== 'granted') {
+        if (permission.status !== 'granted') {
             permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
             if (permission.status !== 'granted') {
                 Alert.alert(
@@ -51,7 +51,7 @@ class Reservation extends React.Component {
     }
 
     async presentLocalNotification(date) {
-        // await this.obtainNotificationPermission();
+        await this.obtainNotificationPermission();
         Notifications.presentNotificationAsync({
             title: 'Your reservation',
             body: 'Reservation for ' + date + ' requested',

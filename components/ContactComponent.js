@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, StyleSheet, Button } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { Text, StyleSheet } from 'react-native';
+import { Card, Icon, Button } from 'react-native-elements';
 import info from '../shared/assignment1';
 import * as Animatable from 'react-native-animatable';
 import * as MailComposer from 'expo-mail-composer';
@@ -42,7 +42,7 @@ class ContactInformation extends React.Component {
                     </Text>
                     <Button
                         title='Send Email'
-                        color='#512DA8'
+                        buttonStyle={{backgroundColor: '#512DA8'}}
                         icon={<Icon name='envelope-o' type='font-awesome' color='#fff' />}
                         onPress={() => this.sendMail()}
                         />
