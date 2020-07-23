@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Image, StyleSheet, SafeAreaView, ToastAndroid } from 'react-native';
+// // import NetInfo from '@react-native-community/netinfo';
 import MenuNavigator from './MenuNavigator';
 import HomeNavigator from './HomeNavigator';
 import ContactNavigator from './ContactNavigator';
@@ -59,6 +60,36 @@ class Main extends Component {
         this.props.fetchDishes();
         this.props.fetchLeaders();
         this.props.fetchPromos();
+        // NetInfo.getConnectionInfo()
+            // .then((connectionInfo) => {
+            //     ToastAndroid.show('Initial Network Connectivity Type: '
+            //         + connectionInfo.type + ', effective Type: ' + connectionInfo.effectiveType,
+            //         ToastAndroid.LONG);
+            // });
+        // NetInfo.addEventListener('connectionChange', this.handleConnectivityChange);
+    }
+
+    componentWillUnmount() {
+        // NetInfo.removeEventListener('connectionChange', this.handleConnectivityChange);
+    }
+
+    handleConnectivityChange = (connectionInfo) => {
+        switch (connectionInfo.type) {
+            case 'none':
+                ToastAndroid.show('You are now offline!', ToastAndroid.LONG);
+                break;
+            case 'wifi':
+                ToastAndroid.show('You are now connected to WIFI!', ToastAndroid.LONG);
+                break;
+            case 'cellular':
+                ToastAndroid.show('You are now connected to cellular!', ToastAndroid.LONG);
+                break;
+            case 'unknown':
+                ToastAndroid.show('You now have an unknown connection!', ToastAndroid.LONG);
+                break;
+            default:
+                break;
+        }
     }
 
     render() {
